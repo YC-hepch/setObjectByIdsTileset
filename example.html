@@ -1,0 +1,56 @@
+<!--
+ * @Descripttion: file content
+ * @version: 1.0
+ * @Author: 予程_hepch
+ * @Date: 2023-05-25 16:55:14
+ * @LastEditors: 予程_hepch
+ * @LastEditTime: 2023-05-28 14:20:31
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="./xxxxxxxxxxxxxxx/widgets.css" />
+
+</head>
+
+<body>
+    <div id="mapViewer"></div>
+    <script src="./xxxxxxxxxxx/Cesium.js"></script>
+    <script src="./setObjectByIdsTileset.js"></script>
+
+    <script type="text/javascript">
+        let tileset = null;
+        window.viewer = new Cesium.Viewer("mapViewer", {
+            baseLayerPicker: false,
+        });
+        let scene = window.viewer.scene;
+        let widget = viewer.cesiumWidget;
+        try {
+
+            add3dtiles()
+        } catch (error) {
+            console.error(`Error creating tileset: ${error}`);
+        }
+
+        viewer.scene.primitives.add(tileset);
+        async function add3dtiles() {
+            tileset = new Cesium.Cesium3DTileset({
+                url: "xxxxx/tileset.json",
+            });
+            scene.primitives.add(tileset);
+            tileset.allTilesLoaded.addEventListener(function () {
+                //设置id 为100的图元颜色为红色
+                tileset.setObjsColor([100], Cesium.Color.RED)
+                //设置id为1和2的图元为不可见，其余图元的可见状态不变。
+                tileset.setOnlyObjsVisible([1, 2], false);
+            });
+        }
+    </script>
+</body>
+
+</html>
